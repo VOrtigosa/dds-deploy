@@ -19,6 +19,16 @@ pipeline {
             }
         }
 
+        stage('Start Agent') {
+            steps {
+                // Encender el agente
+                sh 'ssh produ@192.168.184.132 "sudo systemctl start jenkins-agent.service"'
+                
+                // Esperar un tiempo fijo para que el agente se inicie
+                sleep(30) // Esperar 30 segundos
+            }
+        }
+        
         stage('Checkout Remoto') {
             agent { label 'minikubeJava' }
             steps {
