@@ -19,22 +19,6 @@ pipeline {
             }
         }
 
-        stage('Start Agent') {
-            steps {
-                // Encender el agente
-                sh '''
-                    # Descargar el archivo agent.jar
-                    curl -sO http://192.168.184.130:8080/jnlpJars/agent.jar
-                    
-                    # Iniciar el agente de Jenkins
-                    java -jar agent.jar -url http://192.168.184.130:8080/ -secret 009e3ebe3700f5488028589d961010367cda907258b11925238f2b54d1198fea -name "VM2 - CentOS - Producción" -workDir "/home/produ"
-                    '''
-                
-                // Esperar un tiempo fijo para que el agente se inicie
-                sleep(30) // Esperar 30 segundos
-            }
-        }
-        
         stage('Checkout Remoto') {
             agent { label 'minikubeJava' }
             steps {
