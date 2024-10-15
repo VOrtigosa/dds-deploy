@@ -22,7 +22,13 @@ pipeline {
         stage('Start Agent') {
             steps {
                 // Encender el agente
-                sh 'ssh produ@192.168.184.132 "sudo systemctl start jenkins-agent.service"'
+                sh '''
+                    # Descargar el archivo agent.jar
+                    curl -sO http://192.168.184.130:8080/jnlpJars/agent.jar
+                    
+                    # Iniciar el agente de Jenkins
+                    java -jar agent.jar -url http://192.168.184.130:8080/ -secret 009e3ebe3700f5488028589
+                    '''
                 
                 // Esperar un tiempo fijo para que el agente se inicie
                 sleep(30) // Esperar 30 segundos
