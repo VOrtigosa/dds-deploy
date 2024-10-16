@@ -5,6 +5,8 @@ pipeline {
         stage('Checkout') {  // Etapa para gestionar el repositorio
             steps {
                 script {
+                    echo 'Comprobación push'
+                    sh "checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'dockerhub-login', url: 'https://github.com/VOrtigosa/dds-deploy.git']])"
                     echo 'Actualizando o clonando repositorio en VM1'  // Mensaje informativo
                     // Verifica si el directorio 'dds-deploy' existe
                     if (fileExists('dds-deploy')) {
